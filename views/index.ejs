@@ -3,21 +3,24 @@
     <p class="author_body">Web Developer and AI Enthusiast.</p>
     <img src="https://miro.medium.com/v2/resize:fit:1400/0*SjQDh1Z96unvQMid" alt="some image" class="hero-image" width="981" height="528">
 
-    <section class="article">
-        <h2 class="aricles_heading">Latest Posts</h2>
+    <section class="articles">
+        <h2 class="articles__heading">Latest Posts</h2>
+      
         <ul class="article-ul">
+          <% data.forEach(post => { %>
             <li>
-                <a href="article-ul">
-                    <li>
-                        <a href="#">
-                            <span>Post Title</span>
-                            <span class="article-list_date">Date</span>
-                        </a>
-                    </li>
-                </a>
+              <a href="/post/<%= post._id %>">
+                <span><%= post.title %></span>
+                <span class="article-list__date"><%= post.createdAt.toDateString() %></span>
+              </a>
             </li>
+          <% }) %>
         </ul>
-
-        <a href="#" class="pagination"> &lt; View Older Posts</a>
-    </section>
+      
+        <% if (nextPage !== null) { %>
+            <a href="/?page=<%= nextPage %>" class="pagination">&lt; View Older Posts</a>
+          <% } %>
+         
+      
+      </section>
 </div>
