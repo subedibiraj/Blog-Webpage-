@@ -1,0 +1,57 @@
+<h1>Contact</h1>
+<div className="p-4">
+    <form ref={form} className="row g-3 h-100" onSubmit={sendEmail}>
+      <div className="col-md-6">
+        <label htmlFor="name" className="form-label" aria-required="true">Name</label>
+        <input type="text" className="form-control" id="name" name="name" maxLength="30" required />
+      </div>
+      <div className="col-md-6">
+        <label htmlFor="email" className="form-label" aria-required="true">Email</label>
+        <input type="email" className="form-control" id="email" name="email" required />
+      </div>
+      <div className="col-12">
+        <label htmlFor="title" className="form-label">Title</label>
+        <input type="text" className="form-control" id="title" name="title" />
+      </div>
+      <div className="col-12">
+        <label htmlFor="message" className="form-label" aria-required="true">Message</label>
+        <textarea className="form-control" id="message" name="message" rows="5" required></textarea>
+      </div>
+      <div className="col-12">
+        <button type="submit" className="btn btn-secondary btn-lg" value="SEND">Submit</button>
+      </div>
+    </form>
+  </div>
+
+
+  <script>
+    const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    const name = form.current['name'].value;
+    const email = form.current['email'].value;
+    const message = form.current['message'].value;
+
+    if (!name || !email || !message) {
+      alert('Please fill out all required fields.');
+      return;
+    }
+
+    emailjs.sendForm('service_0lge5jg', 'template_i9st7nm', form.current, 'xCvs23_ZwfsVq7cBv')
+      .then(
+        (result) => {
+          alert('Message successfully sent!');
+          console.log(result.text);
+          window.location.reload(false);
+        },
+        (error) => {
+          alert('Failed to send the message, please try again');
+          console.error(error.text);
+        }
+      );
+
+    form.current.reset();
+  }
+  </script>
