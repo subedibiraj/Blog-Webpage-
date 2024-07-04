@@ -1,6 +1,6 @@
 <h1>Contact</h1>
 <div className="p-4">
-    <form ref={form} className="row g-3 h-100" onSubmit={sendEmail}>
+    <form ref={form} className="row g-3 h-100" onSubmit={sendEmail(event)}>
       <div className="col-md-6">
         <label htmlFor="name" className="form-label" aria-required="true">Name</label>
         <input type="text" className="form-control" id="name" name="name" maxLength="30" required />
@@ -24,34 +24,33 @@
   </div>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
   <script>
-    const form = useRef();
+      function sendEmail(event) {
+          event.preventDefault();
 
-  const sendEmail = (e) => {
-    e.preventDefault();
+          const form = document.getElementById('contactForm');
+          const formData = new FormData(form);
 
-    const name = form.current['name'].value;
-    const email = form.current['email'].value;
-    const message = form.current['message'].value;
+          const name = formData.get('name');
+          const email = formData.get('email');
+          const message = formData.get('message');
 
-    if (!name || !email || !message) {
-      alert('Please fill out all required fields.');
-      return;
-    }
+          if (!name || !email || !message) {
+              alert('Please fill out all required fields.');
+              return;
+          }
 
-    emailjs.sendForm('service_0lge5jg', 'template_i9st7nm', form.current, 'xCvs23_ZwfsVq7cBv')
-      .then(
-        (result) => {
-          alert('Message successfully sent!');
-          console.log(result.text);
-          window.location.reload(false);
-        },
-        (error) => {
-          alert('Failed to send the message, please try again');
-          console.error(error.text);
-        }
-      );
-
-    form.current.reset();
-  }
+          // Replace with your actual EmailJS parameters
+          emailjs.sendForm('service_0lge5jg', 'template_i9st7nm', form)
+              .then(function(response) {
+                  console.log('SUCCESS!', response.status, response.text);
+                  alert('Message successfully sent!');
+                  form.reset();
+                  window.location.reload(false);
+              }, function(error) {
+                  console.log('FAILED...', error);
+                  alert('Failed to send the message, please try again');
+              });
+      }
   </script>

@@ -318,12 +318,17 @@ img {
   border: 0;
 }
 
+.searchBtn{
+  cursor: pointer;
+}
+
 #searchClose {
   position: absolute;
   top: 0;
   right: 0;
   color: var(--gray-light);
   padding: 15px;
+  cursor: pointer;
 }
 
 
