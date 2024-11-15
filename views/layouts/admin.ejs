@@ -8,19 +8,16 @@
   <meta name="description" content="<%= locals.description %>">
   <!-- Link to Main CSS -->
   <link rel="stylesheet" href="/css/styles.css">
-  <!-- Link to JS file (deferred for better performance) -->
+  <!-- Link to any additional JS files -->
   <script type="text/javascript" defer src="/js/script.js"></script>
-  <!-- Optional Favicon -->
+  <!-- Optionally add a Favicon -->
   <link rel="icon" href="/path/to/favicon.ico">
 </head>
 <body>
-  <!-- Include Search Component -->
-  <%- include('../partials/search.ejs') %>
-  
-  <!-- Main Container -->
+  <!-- Container for consistent layout -->
   <div class="container">
     <!-- Include Header -->
-    <%- include('../partials/header.ejs') %>
+    <%- include('../partials/header_admin.ejs') %>
 
     <!-- Main Content Area -->
     <main class="main">

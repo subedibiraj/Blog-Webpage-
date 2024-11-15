@@ -1,56 +1,109 @@
-<h1>Contact</h1>
-<div className="p-4">
-    <form ref={form} className="row g-3 h-100" onSubmit={sendEmail(event)}>
-      <div className="col-md-6">
-        <label htmlFor="name" className="form-label" aria-required="true">Name</label>
-        <input type="text" className="form-control" id="name" name="name" maxLength="30" required />
-      </div>
-      <div className="col-md-6">
-        <label htmlFor="email" className="form-label" aria-required="true">Email</label>
-        <input type="email" className="form-control" id="email" name="email" required />
-      </div>
-      <div className="col-12">
-        <label htmlFor="title" className="form-label">Title</label>
-        <input type="text" className="form-control" id="title" name="title" />
-      </div>
-      <div className="col-12">
-        <label htmlFor="message" className="form-label" aria-required="true">Message</label>
-        <textarea className="form-control" id="message" name="message" rows="5" required></textarea>
-      </div>
-      <div className="col-12">
-        <button type="submit" className="btn btn-secondary btn-lg" value="SEND" id="button-23">Submit</button>
-      </div>
-    </form>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #e9ecef;
+            margin: 0;
+            padding: 0;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .form-label {
+            font-weight: bold;
+            color: #495057;
+        }
+        .form-control {
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease-in-out;
+        }
+        .form-control:focus {
+            border-color: #80bdff;
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        .form-control::placeholder {
+            color: #6c757d;
+        }
+        .form-button {
+            background: #6c757d;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+        .form-button:hover {
+            background: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Contact Us</h1>
+        <form ref={form} id="contactForm" className="row g-3 h-100 needs-validation" novalidate onSubmit={sendEmail(event)}>
+            <div class="mb-3">
+                <label for="name" class="form-label" aria-required="true">Name</label>
+                <input type="text" class="form-control" id="name" name="name" maxLength="30" placeholder="Enter your full name" required />
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label" aria-required="true">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="example@example.com" required />
+            </div>
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Subject (optional)" />
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label" aria-required="true">Message</label>
+                <textarea class="form-control" id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="form-button">Submit</button>
+            </div>
+        </form>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
+    <script>
+        function sendEmail(event) {
+            event.preventDefault();
 
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
-  <script>
-      function sendEmail(event) {
-          event.preventDefault();
+            const form = document.getElementById('contactForm');
+            if (!form.checkValidity()) {
+                form.classList.add('was-validated');
+                return;
+            }
 
-          const form = document.getElementById('contactForm');
-          const formData = new FormData(form);
+            const formData = new FormData(form);
 
-          const name = formData.get('name');
-          const email = formData.get('email');
-          const message = formData.get('message');
-
-          if (!name || !email || !message) {
-              alert('Please fill out all required fields.');
-              return;
-          }
-
-          // Replace with your actual EmailJS parameters
-          emailjs.sendForm('service_0lge5jg', 'template_i9st7nm', form)
-              .then(function(response) {
-                  console.log('SUCCESS!', response.status, response.text);
-                  alert('Message successfully sent!');
-                  form.reset();
-                  window.location.reload(false);
-              }, function(error) {
-                  console.log('FAILED...', error);
-                  alert('Failed to send the message, please try again');
-              });
-      }
-  </script>
+            emailjs.sendForm('service_0lge5jg', 'template_i9st7nm', form)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    alert('Message successfully sent!');
+                    form.reset();
+                    form.classList.remove('was-validated');
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    alert('Failed to send the message, please try again.');
+                });
+        }
+    </script>
+</body>
+</html>

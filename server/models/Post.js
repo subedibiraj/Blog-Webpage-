@@ -8,7 +8,11 @@ const PostSchema = new Schema({
   },
   body: {
     type: String,
-    required: true
+    required: true // The body will now store formatted HTML content including code blocks
+  },
+  image: {
+    type: String, // Optional image field for uploaded images
+    required: false
   },
   createdAt: {
     type: Date,
